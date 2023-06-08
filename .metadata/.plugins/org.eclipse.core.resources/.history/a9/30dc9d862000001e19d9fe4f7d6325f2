@@ -1,0 +1,75 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page session="true"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.SQLException"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+
+<style>
+	body{
+		text-align : center;
+	}
+	
+	div{
+		text-align : center;
+		width : 500px;
+		height: 200px;
+		border : 1px solid #999;
+	}
+</style>
+
+<script>
+
+	function validateLogin(){
+		String login_id = document.Loginform.login_id.value;
+		String login_pwd = document.Loginform.login_pwd.value;
+		
+		Connection conn = null;
+
+		String url = "jdbc:mysql://localhost:3306/regist";
+		String id = "root";                     //MySQL에 접속을 위한 계정의 ID
+		String pwd = "campus";            //MySQL에 접속을 위한 계정의 암호
+		Class.forName("com.mysql.jdbc.Driver");
+		conn = DriverManager.getConnection(url, id, pwd);
+		
+		String sql="SELECT member_id, member_pwd FROM usrregist WHERE member_id='"+login_id+"' AND member_pwd='"+login_pwd+"'";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(!rs){
+			alert("아이디나 비밀번호를 다시 확인하세요.");
+			return false;
+		}
+		else{
+			session.setAttribute("ID",login_id);
+			session.setAttribute("PWD",login_pwd);
+			return true;
+		}
+		conn.close();
+	}
+</script>
+</head>
+<body>
+
+<div>
+	<form name=Loginform action=Login_ok.jsp method=post onSubmit="return validateLogin();">
+	<table style="width:100%;height:100%;border:1px solid white">
+		<tr><td><label>아이디 :&nbsp;&nbsp;</label></td>
+		<td><input type="text" name="login_id"/></td><td></td></tr>
+		<tr><td><label>비밀번호 :&nbsp;&nbsp;</label></td>
+		<td><input type="text" name="login_pwd"/></td>
+		<td><input type="submit" value="로그인" style="width:150;height:150;text-align:center;background-color:#82CAFA"/></td></tr>
+	</table>
+	</form>
+</div>
+
+</body>
+</html>

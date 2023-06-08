@@ -1,0 +1,73 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@ include file="./dbconn.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 목록 보기</title>
+<style>
+	body{
+		width : 1000px;
+	}
+	div#wrapper{
+		width : 95%;
+		margin : 25px;
+		height : 100%;
+	}
+	header{
+		width : 100%;
+		height : 150px;
+		text-align : center;
+		margin-bottom : 10px;
+		font-size : 24pt;
+	}
+	section{
+		width : 100%;
+	}
+</style>
+</head>
+<body>
+<div id="wrapper">
+	<header>회원 목록</header>
+	<section>
+	<table border=1 style="width:100%;word-break:normal">
+	<tr style="text-align:center;background-color:#CFECEC"><td>아이디</td><td>비밀번호</td><td>이름</td><td>성별</td><td>출생년도</td><td>출생월</td><td>출생일</td><td>양력/음력</td>
+	<td>폰 번호</td><td>수신동의</td><td>이메일</td><td>수신동의</td><td>우편번호</td><td>지번주소</td><td>도로명주소</td><td>상세주소</td><td>가입일자</td>
+<%
+	String sql = "SELECT * FROM usrregist";
+	
+	PreparedStatement pstmt = conn.prepareStatement(sql);
+	ResultSet rs = pstmt.executeQuery();
+	
+	while(rs.next()){
+		String member_id = rs.getString("member_id");
+		String member_pwd = rs.getString("member_pwd");
+		String member_name = rs.getString("member_name");
+		String member_gender = rs.getString("member_gender");
+		String birth_y = rs.getString("birth_y");
+		String birth_m = rs.getString("birth_m");
+		String birth_d = rs.getString("birth_d");
+		String birth_kind = rs.getString("birth_kind");
+		String tel = rs.getString("tel");
+		String sms_al = rs.getString("sms_al");
+		String email = rs.getString("email");
+		String email_al = rs.getString("email_al");
+		String addr_post = rs.getString("addr_post");
+		String addr_lot = rs.getString("addr_lot");
+		String addr_road = rs.getString("addr_road");
+		String addr_rest = rs.getString("addr_rest");
+		String reg_date = rs.getString("reg_date");
+	
+%>
+	<tr><td><%=member_id %></td><td><%=member_pwd %></td><td><%=member_name %></td><td><%=member_gender %></td><td><%=birth_y %></td><td><%=birth_m %></td>
+	<td><%=birth_d %></td><td><%=birth_kind %></td><td><%=tel %></td><td><%=sms_al %></td><td><%=email %></td><td><%=email_al %></td>
+	<td><%=addr_post %></td><td><%=addr_lot %></td><td><%=addr_road %></td><td><%=addr_rest %></td><td><%=reg_date %></td></tr>
+	<%} %>
+	</table>	
+	</section>
+</div>
+
+</body>
+</html>

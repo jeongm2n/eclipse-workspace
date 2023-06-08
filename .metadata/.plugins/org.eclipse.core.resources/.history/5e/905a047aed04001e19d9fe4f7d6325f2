@@ -1,0 +1,63 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@page session="true"%>
+<%@ include file="./dbconn.jsp"%>
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 코드가 중복되기 때문에 유저가 로그인 해서 스스로 탈퇴하는 경우(Delete.jsp에서 넘어오는 경우)와 
+		관리자가 Admin 페이지에서 회원을 삭제하는 경우(Admin.jsp, Search.jsp에서 넘어오는 경우)를 나눔 -->
+<%
+	String delete_id = request.getParameter("delete_id"); //Admin.jsp, Search.jsp에서 받아올 값
+
+	
+	if(delete_id.equals("null")){
+		String pwdchk = request.getParameter("pwdchk"); //Delete.jsp에서 받아올 값
+		String usr_id = (String)session.getAttribute("ID"); //Delete.jsp에서 받아올 값
+	
+		String sql = "SELECT member_pwd FROM usrregist WHERE member_id='"+usr_id+"'";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		String member_pwd = null;
+		
+		if(rs.next()){
+			member_pwd = rs.getString("member_pwd");
+		}
+		
+		if(!pwdchk.equals(member_pwd)){ /* 비밀번호가 다르면 삭제 못하게 함 */
+			out.println("<script>alert('비밀번호를 다시 확인해주세요.'); location.href='Delelte.jsp';</script>");
+		}
+		else{ /* 비밀번호가 맞으면 탈퇴 */
+			String sql2 = "DELETE FROM usrregist WHERE member_pwd='"+pwdchk+"'";
+			PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.executeUpdate();
+			out.println("<script>location.href='Delete_ok.jsp';</script>");
+		}
+	}
+	else{
+		String sql = "SELECT member_id FROM usrregist WHERE member_id='"+delete_id+"'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()){ //삭제할 아이디가 DB에 있으면 삭제 후 Admin 화면으로 돌아감
+			
+			String sql2 = "DELETE FROM usrregist WHERE member_id='"+delete_id+"'";
+			PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.executeUpdate();
+			out.println("<script>alert('회원 삭제가 완료되었습니다.'); location.href='date0530/src/main/Admin/Admin.jsp';</script>");
+			
+		}
+		else{ //없으면 alert으로 경고를 주고 Admin 화면으로 돌아감
+			out.println("<script>alert('해당 ID의 회원은 없습니다! 다시 확인해주세요.'); location.href='../Admin.jsp';</script>");
+		}
+	}
+%>
+</body>
+</html>

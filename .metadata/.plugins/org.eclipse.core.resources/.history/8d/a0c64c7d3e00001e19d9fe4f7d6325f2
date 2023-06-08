@@ -1,0 +1,152 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@page session="true"%>
+<%@ include file="./dbconn.jsp"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원정보 수정</title>
+<style>
+	.front{
+		background-color : #B4CFEC;
+	}
+	
+	.rear{
+		background-color : #F0F8FF;
+	}
+	
+	.textbox{
+		width:200px;
+	}
+</style>
+</head>
+<body>
+<%
+	String usr_id = (String)session.getAttribute("ID");
+	
+	String sql="SELECT * FROM usrregist WHERE member_id='"+usr_id+"'";
+	
+	PreparedStatement pstmt = conn.prepareStatement(sql);
+	ResultSet rs = pstmt.executeQuery();
+	
+	while(rs.next()){
+		String member_pwd = rs.getString("member_pwd");
+		String member_name = rs.getString("member_name");
+		String member_gender = rs.getString("member_gender");
+		int birth_y = Integer.parseInt(rs.getString("birth_y"));
+		int birth_m = Integer.parseInt(rs.getString("birth_m"));
+		int birth_d = Integer.parseInt(rs.getString("birth_d"));
+		String birth_kind = rs.getString("birth_kind");
+		String tel = rs.getString("tel");
+		String sms_al = rs.getString("sms_al");
+		String email = rs.getString("email");
+		String email_al = rs.getString("email_al");
+		String addr_post = rs.getString("addr_post");
+		String addr_lot = rs.getString("addr_lot");
+		String addr_road = rs.getString("addr_road");
+		String addr_rest = rs.getString("addr_rest");
+%>
+<h1 style="color:#659EC7">회원정보수정</h1>
+<form name="Registform" action=Regist_ok.jsp method=get onSubmit="return ;">
+<table border=1>
+	<tr><td class="front">아이디</td>
+    <td class="rear"><%=usr_id%></td></tr>
+    <tr><td class="front">기존 비밀번호</td>
+    <td class="rear"><%=member_pwd%></td></tr>
+   	<tr><td class="front">새로운 비밀번호</td>
+   	<td class="rear"><input type="text" class="textbox" name="pwd"></td></tr>
+   	<tr><td class="front">새로운 비밀번호 확인</td>
+   	<td class="rear"><input type="text" class="textbox" name="pwd2"></td></tr>
+   	<tr><td class="front">이름</td>
+   	<td class="rear"><input type="text" name="usrname"></td></tr>
+   	<tr><td class="front">성별</td>
+   	<script> //성별에 따라 라디오버튼 기본값을 다르게 설정 
+   		var m = "male";
+   		var g = member_gender;
+   		if(g.equals(m)){
+   			document.write("<td class='rear'><input type='radio' name='gender' value='male' checked='checked'/>남");
+   			document.write("<input type='radio' name='gender' value='female'/>여</td></tr>");
+   		}
+   		else{
+   			document.write("<td class='rear'><input type='radio' name='gender' value='male'/>남");
+   			document.write("<input type='radio' name='gender' value='female' checked='checked'/>여</td></tr>");
+   		}
+   	</script>
+   	<!-- <td class="rear"><input type="radio" name="gender" value="male"/>남
+   	<input type="radio" name="gender" value="female"/>여</td></tr> -->
+   	<tr><td class="front">생년월일</td>
+   	<td class="rear"><select name="year">
+   	<script> // 저장되어 있는 사용자의 생년월일이 기본값으로 뜨도록 설정 
+   		for(var i=2023;i>1920;i--){
+   			if(i==<%=birth_y%>){
+   				document.write("<option selected='selected'>"+i+"</option>");
+   			}
+   			else{ document.write("<option>"+i+"</option>");}
+   		}
+   	</script>
+   	</select>년
+   	
+   	<select name="month">
+   	<script>
+   		for(var i=1;i<=12;i++){
+   			if(i==<%=birth_m%>){
+   				document.write("<option selected='selected'>"+i+"</option>");
+   			}
+   			else{ document.write("<option>"+i+"</option>");}
+   		}
+   	</script>
+   	</select>월
+   	
+   	<select name="day">
+   	<script>
+   		for(var i=1;i<=31;i++){
+   			if(i==<%=birth_d%>){
+   				document.write("<option selected='selected'>"+i+"</option>");
+   			}
+   			else{ document.write("<option>"+i+"</option>");}
+   		}
+   	</script>
+   	</select>일
+   	<input type="radio" name="kind" value="양력"/>양력
+   	<input type="radio" name="kind" value="음력"/>음력</td></tr>
+   	<tr><td class="front">휴대폰번호</td>
+   	<td class="rear"><select name="first">
+   		<option selected="selected" value="null">선택하세요</option>
+   		<option>010</option>
+   		<option>016</option>
+   		<option>011</option>
+   	</select>
+   	<input type="text" name="second"/>
+   	<input type="text" name="third"/><br>
+   	<input type="checkbox" name="sms_al" value="yes" id="input_yes1"/>SMS 광고 수신을 동의합니다.
+   	<input type="hidden" name="sms_al" value="no" id="input_no1"/></td></tr>
+   	<tr><td class="front">이메일</td>
+   	<td class="rear"><input type="text" class="textbox" name="front"/>
+   	@<input type="text" class="textbox" name="rear"/>
+   	<select name="rear2" onchange="handleonChange(this);">
+   	<option selected="selected" value="null">직접입력</option>
+   	<option value="naver.com">naver.com</option>
+   	<option value="nate.com">nate.com</option>
+   	<option value="gmail.com">gmail.com</option>
+   	</select><br>
+   	<input type="checkbox" name="email_al" value="yes" id="input_yes2"/>E-mail 광고 수신을 동의합니다.
+   	<input type="hidden" name="sms_al" value="no" id="input_no2"/></td></tr>
+   	<tr><td class="front">주소</td>
+   	<td class="rear">
+   	우편번호<br><input type="text" class="textbox" name="addr_post"/><br>
+   	지번 주소<br><input type="text" class="textbox" name="addr_lot"/><br>
+   	도로명 주소<br><input type="text" class="textbox" name="addr_road"/><br>
+   	나머지 주소<br><input type="text" class="textbox" name="addr_rest"/></td></tr>
+</table>
+    
+   	<input type="submit" value="수정하기"/>
+</form>
+<%
+} 
+%>
+</body>
+</body>
+</html>

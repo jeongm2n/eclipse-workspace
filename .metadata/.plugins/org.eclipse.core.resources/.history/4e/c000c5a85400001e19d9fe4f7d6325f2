@@ -1,0 +1,49 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+
+<style>
+	body{
+		text-align : center;
+	}
+	
+	div{
+		margin:150px;
+		text-align : center;
+		width : 500px;
+		height: 400px;
+		border : 1px solid #999;
+	}
+	
+	.button{
+		text-align:center;
+		background-color:#82CAFA
+	}
+	
+	.textbox{
+		width:200px;
+	}
+</style>
+
+</head>
+<body>
+
+<div>
+	<form name=Loginform action=Login.jsp method=post>
+	<table style="margin:100px;margin-bottom:0px;">
+		<tr><td><input type="text" class="textbox" name="login_id" placeholder="아이디"/></td></tr>
+		<tr><td><input type="text" class="textbox" name="login_pwd" placeholder="비밀번호"/></td></tr>
+		<tr><td><input type="submit" value="로그인" class="button"/></td></tr>
+	</table>
+	</form><br>
+	<font style="font-size:11pt">아직 회원이 아니신가요?</font><br>
+	<button onclick="location='Regist.jsp'" class="button" >회원가입</button>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+/* 레이아웃의 큰 틀이 되는 body의 css */
+	body{
+		text-align : center;
+		width : 100%;
+		background-color : #E3E4FA;
+	}
+	
+	/* 헤더, 네비게이션, 섹션의 공통적인 css */
+	header, section{
+		border : 1px solid #999;
+		margin-bottom : 20px;
+	}
+	
+	/* body위에 덮을 div의 css */
+	div#wrapper{
+		width : 90%;
+		text-align : left;
+		min-height : 400px;
+		margin : 0 auto;
+		float: left;
+		padding : 5%;
+	}
+	
+	/* header의 css */
+	header{
+		font-family : 'Gugi', cursive;
+		width : 100%; 
+		background-color : #4E387E;
+		font-size : 50pt;
+		height : 100px;
+		padding-top : 10px;
+	}
+	
+	
+	/* 주 내용이 들어갈 section의 css */
+	section{
+		/* 경계선과 너무 딱 붙어서 내용들이 나오면 안예뻐서 경계선과 좀 떨어져서 내용들을 출력하기 위함 */
+		padding-left : 5%;
+		padding-right : 5%;
+		padding-top : 40px;
+		width : 90%;
+		float : left;
+	}
+	
+	.shadow{
+		text-shadow : 5px 7px 10px gray;
+	}
+	
+	table, td, th {
+		width : 100%;
+		word-break : keep-all;
+		text-align : center;
+		border : 1px solid black;
+		border-collapse : collapse;
+	}
+	
+	.button{
+		width : 30px;
+		height : 20px;
+		background-color : #C3FDB8;
+	}

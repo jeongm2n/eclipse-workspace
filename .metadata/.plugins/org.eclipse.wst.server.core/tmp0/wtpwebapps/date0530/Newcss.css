@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+	body{
+		text-align : center;
+	}
+	
+	div{
+		margin:150px;
+		text-align : center;
+		width : 500px;
+		height: 300px;
+		border : 1px solid #999;
+	}
+	
+	.button{
+		text-align:center;
+		background-color:#82CAFA
+	}
+	
+	.textbox{
+		width:200px;
+	}
+	
+	

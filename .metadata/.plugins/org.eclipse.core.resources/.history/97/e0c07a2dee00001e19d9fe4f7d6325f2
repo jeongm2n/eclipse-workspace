@@ -1,0 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/256/4228/4228714.png">
+<title>게시판</title>
+<link rel="stylesheet" href="./boardCss.css">
+</head>
+<body>
+<div id="wrapper">
+<header><h1 class="shadow">정민's 게시판</h1></header>
+</div>
+</body>
+</html>

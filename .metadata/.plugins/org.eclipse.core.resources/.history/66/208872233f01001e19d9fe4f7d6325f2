@@ -1,0 +1,49 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@ include file="./dbconn.jsp"%>
+
+<%
+	String column = request.getParameter("search");
+	String value = request.getParameter("searchtext");
+	
+	String sql = "SELECT * FROM usrregist WHERE "+column+"='%"+value+"%'";
+	
+	PreparedStatement pstmt = conn.prepareStatement(sql);
+	ResultSet rs = pstmt.executeQuery();
+	%>
+	[
+	<%
+	int i=0;
+	while(rs.next()){
+		String member_id = rs.getString("member_id");
+		String member_pwd = rs.getString("member_pwd");
+		String member_name = rs.getString("member_name");
+		String member_gender = rs.getString("member_gender");
+		String birth_y = rs.getString("birth_y");
+		String birth_m = rs.getString("birth_m");
+		String birth_d = rs.getString("birth_d");
+		String birth_kind = rs.getString("birth_kind");
+		String tel = rs.getString("tel");
+		String sms_al = rs.getString("sms_al");
+		String email = rs.getString("email");
+		String email_al = rs.getString("email_al");
+		String addr_post = rs.getString("addr_post");
+		String addr_lot = rs.getString("addr_lot");
+		String addr_road = rs.getString("addr_road");
+		String addr_rest = rs.getString("addr_rest");
+		String reg_date = rs.getString("reg_date");
+	
+		if(i>0){
+			out.print(",");
+		}
+%>
+	{"member_id":"<%=member_id %>", "member_pwd":"<%=member_pwd %>", "member_name":"<%=member_name %>", "member_gender":"<%=member_gender %>",
+	"birth_y":"<%=birth_y %>", "birth_m":"<%=birth_m %>", "birth_d":"<%=birth_d %>", "birth_kind":"<%=birth_kind %>", "tel":"<%=tel %>", "sms_al":"<%=sms_al %>",
+	"email":"<%=email %>", "email_al":"<%=email_al %>", "addr_post":"<%=addr_post %>", "addr_lot":"<%=addr_lot %>", "addr_road":"<%=addr_road %>",
+	"addr_rest":"<%=addr_rest %>", "reg_date":"<%=reg_date %>"}
+<%
+	i++;
+}
+%>
+]

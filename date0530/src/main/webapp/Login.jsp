@@ -1,0 +1,34 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@page session="true"%>
+<%@ include file="./dbconn.jsp"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+</head>
+<body>
+<%
+	String login_id = request.getParameter("login_id");
+	String login_pwd = request.getParameter("login_pwd");
+	
+	String sql="SELECT member_id, member_pwd FROM usrregist WHERE member_id='"+login_id+"' AND member_pwd='"+login_pwd+"'";
+	
+	PreparedStatement pstmt = conn.prepareStatement(sql);
+	ResultSet rs = pstmt.executeQuery();
+	
+	if(rs.next()){
+		do{
+			session.setAttribute("ID",login_id);
+			out.println("<script>alert('로그인에 성공했습니다!'); location.href='Login_ok.jsp';</script>");
+		}while(rs.next());
+	}
+	else{
+		out.println("<script>alert('아이디나 비밀번호를 다시 확인하세요.'); location.href='Main.jsp'; </script>");
+	}
+%>
+</body>
+</html>

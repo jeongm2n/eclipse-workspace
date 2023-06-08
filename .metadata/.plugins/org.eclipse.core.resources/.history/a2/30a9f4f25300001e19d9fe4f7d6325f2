@@ -1,0 +1,50 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@page session="true"%>
+<%@ include file="./dbconn.jsp"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원탈퇴</title>
+<style>
+	body{
+		text-align : center;
+	}
+	
+	div{
+		margin:150px;
+		text-align : center;
+		width : 500px;
+		height: 400px;
+		border : 1px solid #999;
+	}
+	
+	.button{
+		text-align:center;
+		background-color:#82CAFA
+	}
+	
+	.textbox{
+		width:200px;
+	}
+</style>
+</head>
+<body>
+
+<%
+	String usr_id = (String)session.getAttribute("ID");
+%>
+<div>
+<form name="Deleteform" action="Delete_ok.jsp" onSubmit="return ;">
+<table style="margin:50px">
+<tr><td>비밀번호 확인</td></tr>
+<tr><td><input class="textbox" type="text" name="pwdchk"></td>
+<td><input type="submit" value="탈퇴하기" class="button"></td></tr>
+</table>
+</form>
+</div>
+</body>
+</html>

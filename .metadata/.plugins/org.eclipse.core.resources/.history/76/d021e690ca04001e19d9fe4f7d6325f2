@@ -1,0 +1,95 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@ include file="./dbconn.jsp"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 관리</title>
+<link rel="stylesheet" href="./Admincss.css">
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Gugi&family=Jua&display=swap');
+</style>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+	function validateSearch(){
+		var searchtext = document.getElementById('searchtext').value;
+		if(!searchtext){
+			alert('검색할 내용을 입력해주세요!!');
+			return false;
+		}
+		else{ return true; }
+	}
+	
+	function validateDelete(){
+		if(!confirm('회원을 삭제하시겠습니까?')){
+			return false;
+		}
+		else{ return true; }
+	}
+</script>
+</head>
+<body>
+<div id="wrapper">
+<header>회원&nbsp;관리&nbsp;페이지</header>
+<aside>
+	<form style="float:right"action="Delete_ok2.jsp" onSubmit="return validateDelete();">
+	<input type="text" name="delete_id"/>
+	<input type="submit" value="회원 삭제"/>
+</form><br>
+</aside>
+<section>
+<form style="vertical-align : middle;" action="Search.jsp" onSubmit="return validateSearch();">
+<select name="search" style="height:30px">
+<script>
+	var options = ['ID','이름','출생년도','출생월','전화번호','이메일','우편번호','지번주소','도로명 주소','가입일자'];
+	var value = ['member_id','member_name','birth_y','birth_month','tel','email','addr_post','addr_lot','addr_road','reg_date']
+	for(var i=0;i<10;i++){
+		document.write("<option value='"+value[i]+"'>"+options[i]+"</option>");
+	}
+</script>
+</select>
+<input type="text" style="width:300px;height:30px"name="searchtext" id="searchtext" placeholder="검색할 내용을 입력하세요."/>
+<input type="image" src="https://cdn-icons-png.flaticon.com/128/751/751463.png" style="background-color:#C3FDB8;width:30px;height:30px"> 
+</form><br>
+<table>
+	<tr style="background-color:#B6B6B4"><th>아이디</th><th>비밀번호</th><th>이름</th><th>성별</th><th>출생년도</th><th>출생월</th><th>출생일</th><th>양력/음력</th>
+	<th>폰 번호</th><th>수신동의</th><th>이메일</th><th>수신동의</th><th>우편번호</th><th>지번주소</th><th>도로명주소</th><th>상세주소</th><th>가입일자</th></tr>
+<%
+	String sql = "SELECT * FROM usrregist";
+	
+	PreparedStatement pstmt = conn.prepareStatement(sql);
+	ResultSet rs = pstmt.executeQuery();
+	
+	while(rs.next()){
+		String member_id = rs.getString("member_id");
+		String member_pwd = rs.getString("member_pwd");
+		String member_name = rs.getString("member_name");
+		String member_gender = rs.getString("member_gender");
+		String birth_y = rs.getString("birth_y");
+		String birth_m = rs.getString("birth_m");
+		String birth_d = rs.getString("birth_d");
+		String birth_kind = rs.getString("birth_kind");
+		String tel = rs.getString("tel");
+		String sms_al = rs.getString("sms_al");
+		String email = rs.getString("email");
+		String email_al = rs.getString("email_al");
+		String addr_post = rs.getString("addr_post");
+		String addr_lot = rs.getString("addr_lot");
+		String addr_road = rs.getString("addr_road");
+		String addr_rest = rs.getString("addr_rest");
+		String reg_date = rs.getString("reg_date");
+	
+%>
+	<tr style="background-color:#F0F8FF"><td><%=member_id %></td><td><%=member_pwd %></td><td><%=member_name %></td><td><%=member_gender %></td><td><%=birth_y %>년</td><td><%=birth_m %>월</td>
+	<td><%=birth_d %>일</td><td><%=birth_kind %></td><td><%=tel %></td><td><%=sms_al %></td><td><%=email %></td><td><%=email_al %></td>
+	<td><%=addr_post %></td><td><%=addr_lot %></td><td><%=addr_road %></td><td><%=addr_rest %></td><td><%=reg_date %></td></tr>
+	<%} %>
+	</table> 
+	
+</section>
+</div>
+</body>
+</html>

@@ -33,14 +33,6 @@
 		})
 	});
 	
-	/* function searchPeriod(){
-		var option = document.getElementById('search').value;
-		if(option.equals('출생년도') || option.equals('출생월') || option.equals('출생일')){
-			content.hide();
-		}
-	} */
-	
-	
 	function validateUpdate(){
 		var content = document.getElementById('content').value;
 		

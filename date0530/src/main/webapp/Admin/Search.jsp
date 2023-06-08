@@ -9,9 +9,22 @@
 <meta charset="UTF-8">
 <%
 String column = request.getParameter("search");
+String sql = "";
 String value = request.getParameter("searchtext");
+if(!value.equals("")){
+	/* 검색한 내용이 들어간 데이터는 다 화면에 들 수 있게 value 앞뒤로 % 붙임 */
+	sql = "SELECT * FROM usrregist WHERE "+column+" LIKE '%"+value+"%'";
+}
+else{
+	String start = request.getParameter("start");
+	String end = request.getParameter("end");
+	
+	/* BETWEEN A AND B 를 사용하여 A~B사이의 값 SELECT하기 */
+	sql = "SELECT * FROM usrregist WHERE "+column+" BETWEEN '"+start+"' AND '"+end+"'";
+}
+
 %>
-<title><%=value %> 검색</title>
+<title>검색</title>
 <link rel="stylesheet" href="./Admincss.css">
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Gugi&family=Jua&display=swap');
@@ -71,9 +84,7 @@ String value = request.getParameter("searchtext");
 	<tr style="background-color:#B6B6B4"><th>아이디</th><th>비밀번호</th><th>이름</th><th>성별</th><th>출생년도</th><th>출생월</th><th>출생일</th><th>양력/음력</th>
 	<th>폰 번호</th><th>수신동의</th><th>이메일</th><th>수신동의</th><th>우편번호</th><th>지번주소</th><th>도로명주소</th><th>상세주소</th><th>가입일자</th></tr>
 <%
- 	/* 검색한 내용이 들어간 데이터는 다 화면에 들 수 있게 value 앞뒤로 % 붙임 */
-	String sql = "SELECT * FROM usrregist WHERE "+column+" LIKE '%"+value+"%'";
-	
+
 	PreparedStatement pstmt = conn.prepareStatement(sql);
 	ResultSet rs = pstmt.executeQuery();
 

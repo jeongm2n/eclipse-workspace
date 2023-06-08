@@ -12,7 +12,7 @@
 <%
 	Connection conn = null;
 	
-	String url = "jdbc:mysql://localhost:3306/regist";
+	String url = "jdbc:mysql://localhost:3306/myweb";
 	String id = "root";                  
 	String pwd = "campus";
 	Class.forName("com.mysql.jdbc.Driver");

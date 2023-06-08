@@ -14,17 +14,36 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
-	function validateSearch(){
-		var searchtext = document.getElementById('searchtext').value;
-		if(!searchtext){
-			alert('검색할 내용을 입력해주세요!!');
-			return false;
+	
+	$(function(){
+		$("#start").hide();
+		$("#end").hide();
+		
+		/* 출생년도, 출생월, 출생일을 선택하면 기간을 선택할 수 있도록. ex)출생년도가 1960년~1970년 사이인 사람들을 모두 검색 */
+		$("#search").change(function(){
+			if($("#search").val()=="birth_y" || $("#search").val()=="birth_m" || $("#search").val()=="birth_d"){
+				$("#searchtext").hide();
+				$("#start").show();
+				$("#end").show();
+			}else{
+				$("#searchtext").show();
+				$("#start").hide();
+				$("#end").hide();
+			}
+		})
+	});
+	
+	/* function searchPeriod(){
+		var option = document.getElementById('search').value;
+		if(option.equals('출생년도') || option.equals('출생월') || option.equals('출생일')){
+			content.hide();
 		}
-		else{ return true;}
-	}
+	} */
+	
 	
 	function validateUpdate(){
 		var content = document.getElementById('content').value;
+		
 		if(!content){
 			alert('변경할 내용을 입력하세요!');
 			return false;
@@ -40,6 +59,19 @@
 			return true;
 		}
 	}
+	
+	function validateSearch(){
+		var searchtext = document.getElementById('searchtext').value;
+		var start = document.getElementById('start').value;
+		var end = document.getElementById('end').value;
+		
+		if(!searchtext && (!start || !end)){
+			alert('검색할 내용을 입력해주세요!!');
+			return false;
+		}
+		else{ return true;}
+	}
+	
 </script>
 </head>
 <body>
@@ -57,9 +89,9 @@
 	<input type="text" name="update_id" placeholder="변경할 회원의 ID를 입력하세요." style="width:170px"/><br>
 	<select name="update" style="height:20px">
 	<script>
-		var options = ['ID','비밀번호','이름','출생년도','출생월','전화번호','이메일','우편번호','지번주소','도로명 주소','상세주소'];
-		var value = ['member_id','member_pwd','member_name','birth_y','birth_month','tel','email','addr_post','addr_lot','addr_road','addr_rest']
-		for(var i=0;i<11;i++){
+		var options = ['ID','비밀번호','이름','출생년도','출생월','출생일','전화번호','이메일','우편번호','지번주소','도로명 주소','상세주소'];
+		var value = ['member_id','member_pwd','member_name','birth_y','birth_m','birth_d','tel','email','addr_post','addr_lot','addr_road','addr_rest']
+		for(var i=0;i<12;i++){
 			document.write("<option value='"+value[i]+"'>"+options[i]+"</option>");
 		}
 	</script>
@@ -71,11 +103,11 @@
 </aside>
 <section>
 <form style="vertical-align : middle;" action="Search.jsp" onSubmit="return validateSearch();">
-<select name="search" style="height:30px">
+<select name="search" id="search" style="height:30px">
 <script> 
-	var options = ['ID','이름','출생년도','출생월','전화번호','이메일','우편번호','지번주소','도로명 주소','상세주소','가입일자'];
-	var value = ['member_id','member_name','birth_y','birth_month','tel','email','addr_post','addr_lot','addr_road','addr_rest','reg_date']
-	for(var i=0;i<11;i++){
+	var options = ['ID','이름','출생년도','출생월','출생일','전화번호','이메일','우편번호','지번주소','도로명 주소','상세주소','가입일자'];
+	var value = ['member_id','member_name','birth_y','birth_m','birth_d','tel','email','addr_post','addr_lot','addr_road','addr_rest','reg_date']
+	for(var i=0;i<12;i++){
 		/* select 항목의 value를 db 테이블의 column으로 설정 */
 		document.write("<option value='"+value[i]+"'>"+options[i]+"</option>")
 	}
@@ -83,6 +115,9 @@
 </select>
 <!-- 해당 column에서 검색할 내용 입력 -->
 <input type="text" style="width:300px;height:30px" name="searchtext" id="searchtext" placeholder="검색할 내용을 입력하세요."/>
+<!-- 출생년도, 출생월, 출생일을 선택하면 기간을 선택할 수 있도록. ex)출생년도가 1960년~1970년 사이인 사람들을 모두 검색 -->
+<input type="text" style="width:150px;height:30px" name="start" id="start" placeholder="시작"/>
+<input type="text" style="width:150px;height:30px" name="end" id="end" placeholder="끝"/>
 <input type="image" src="https://cdn-icons-png.flaticon.com/128/751/751463.png" style="background-color:#C3FDB8;width:30px;height:30px"> 
 </form><br>
 <table> <!-- 처음엔 전체 데이터를 볼 수 있게 --> 

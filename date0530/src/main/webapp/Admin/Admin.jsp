@@ -81,9 +81,9 @@
 	<input type="text" name="update_id" placeholder="변경할 회원의 ID를 입력하세요." style="width:170px"/><br>
 	<select name="update" style="height:20px">
 	<script>
-		var options = ['ID','비밀번호','이름','출생년도','출생월','출생일','전화번호','이메일','우편번호','지번주소','도로명 주소','상세주소'];
-		var value = ['member_id','member_pwd','member_name','birth_y','birth_m','birth_d','tel','email','addr_post','addr_lot','addr_road','addr_rest']
-		for(var i=0;i<12;i++){
+		var options = ['ID','비밀번호','이름','부서','출생년도','출생월','출생일','전화번호','이메일','우편번호','지번주소','도로명 주소','상세주소'];
+		var value = ['member_id','member_pwd','member_name','dept_name','birth_y','birth_m','birth_d','tel','email','addr_post','addr_lot','addr_road','addr_rest'];
+		for(var i=0;i<13;i++){
 			document.write("<option value='"+value[i]+"'>"+options[i]+"</option>");
 		}
 	</script>
@@ -97,9 +97,9 @@
 <form style="vertical-align : middle;" action="Search.jsp" onSubmit="return validateSearch();">
 <select name="search" id="search" style="height:30px">
 <script> 
-	var options = ['ID','이름','출생년도','출생월','출생일','전화번호','이메일','우편번호','지번주소','도로명 주소','상세주소','가입일자'];
-	var value = ['member_id','member_name','birth_y','birth_m','birth_d','tel','email','addr_post','addr_lot','addr_road','addr_rest','reg_date']
-	for(var i=0;i<12;i++){
+	var options = ['ID','이름','부서','출생년도','출생월','출생일','전화번호','이메일','우편번호','지번주소','도로명 주소','상세주소','가입일자'];
+	var value = ['member_id','member_name','dept_name','birth_y','birth_m','birth_d','tel','email','addr_post','addr_lot','addr_road','addr_rest','reg_date']
+	for(var i=0;i<13;i++){
 		/* select 항목의 value를 db 테이블의 column으로 설정 */
 		document.write("<option value='"+value[i]+"'>"+options[i]+"</option>")
 	}
@@ -113,10 +113,10 @@
 <input type="image" src="https://cdn-icons-png.flaticon.com/128/751/751463.png" style="background-color:#C3FDB8;width:30px;height:30px"> 
 </form><br>
 <table> <!-- 처음엔 전체 데이터를 볼 수 있게 --> 
-	<tr style="background-color:#B6B6B4"><th>아이디</th><th>비밀번호</th><th>이름</th><th>성별</th><th>출생년도</th><th>출생월</th><th>출생일</th><th>양력/음력</th>
+	<tr style="background-color:#B6B6B4"><th>아이디</th><th>비밀번호</th><th>이름</th><th>성별</th><th>부서</th><th>출생년도</th><th>출생월</th><th>출생일</th><th>양력/음력</th>
 	<th>폰 번호</th><th>수신동의</th><th>이메일</th><th>수신동의</th><th>우편번호</th><th>지번주소</th><th>도로명주소</th><th>상세주소</th><th>가입일자</th></tr>
 <%
-	String sql = "SELECT * FROM usrregist";
+	String sql = "SELECT * FROM usrregist,dept WHERE usrregist.dept_no=dept.dept_no";
 	
 	PreparedStatement pstmt = conn.prepareStatement(sql);
 	ResultSet rs = pstmt.executeQuery();
@@ -126,6 +126,7 @@
 		String member_pwd = rs.getString("member_pwd");
 		String member_name = rs.getString("member_name");
 		String member_gender = rs.getString("member_gender");
+		String dept_name = rs.getString("dept_name");
 		String birth_y = rs.getString("birth_y");
 		String birth_m = rs.getString("birth_m");
 		String birth_d = rs.getString("birth_d");
@@ -141,8 +142,8 @@
 		String reg_date = rs.getString("reg_date");
 	
 %>
-	<tr style="background-color:#F0F8FF"><td><%=member_id %></td><td><%=member_pwd %></td><td><%=member_name %></td><td><%=member_gender %></td><td><%=birth_y %>년</td><td><%=birth_m %>월</td>
-	<td><%=birth_d %>일</td><td><%=birth_kind %></td><td><%=tel %></td><td><%=sms_al %></td><td><%=email %></td><td><%=email_al %></td>
+	<tr style="background-color:#F0F8FF"><td><%=member_id %></td><td><%=member_pwd %></td><td><%=member_name %></td><td><%=member_gender %></td><td><%=dept_name %></td>
+	<td><%=birth_y %>년</td><td><%=birth_m %>월</td><td><%=birth_d %>일</td><td><%=birth_kind %></td><td><%=tel %></td><td><%=sms_al %></td><td><%=email %></td><td><%=email_al %></td>
 	<td><%=addr_post %></td><td><%=addr_lot %></td><td><%=addr_road %></td><td><%=addr_rest %></td><td><%=reg_date %></td></tr>
 	<%} %>
 	</table> 

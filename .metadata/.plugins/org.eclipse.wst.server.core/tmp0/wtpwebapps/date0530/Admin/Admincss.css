@@ -14,13 +14,13 @@
 	}
 	
 	/* body위에 덮을 div의 css */
-	div#wrapper{
-		width : 90%;
+	#wrapper{
+		width : 96%;
 		text-align : left;
 		min-height : 400px;
 		margin : 0 auto;
 		float: left;
-		padding : 5%;
+		padding : 2%;
 	}
 	
 	/* header의 css */

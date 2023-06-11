@@ -1,26 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ include file="../dbconn.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<link rel="stylesheet" href="./Newcss.css">
 <style>
-	.front{
-		background-color : #B4CFEC;
-	}
+@import url('https://fonts.googleapis.com/css2?family=Gugi&family=Jua&display=swap');
 	
-	.rear{
-		background-color : #F0F8FF;
-	}
-	
-	.textbox{
-		width:200px;
-	}
 </style>
 
 <script>
-
+	
 	/* 아이디 확인 */
 	 function checkId(id){
 		var cnt = 0;
@@ -68,6 +62,7 @@
 		var pwd2 = document.Registform.pss.value;
 		var usrname = document.Registform.usrname.value;
 		var gender = document.Registform.gender.value;
+		var dept = document.getElementById('dept').value;
 		var year = document.Registform.year.value;
 		var month = document.Registform.month.value;
 		var day = document.Registform.day.value;
@@ -102,7 +97,7 @@
 		}
 		
 		/* 모든 항목 중에 입력안한 곳이 있을 시 alert 출력 */
-		if(!id || !pwd1 || !pwd2 || !usrname || !gender || !year || !month || !day || !kind || !first ||
+		if(!id || !pwd1 || !pwd2 || !usrname || !gender || !dept || !year || !month || !day || !kind || !first ||
 				!second || !third || !front || !rear || !addr_post || !addr_lot || !addr_road || !addr_rest){
 			alert('모든 항목을 입력해주세요!');
 			return false;
@@ -117,12 +112,14 @@
 
 </head>
 <body>
-
-<h1 style="color:#659EC7">필수입력사항</h1>
+<div id="wrapper">
+<header>회원&nbsp;가입&nbsp;페이지</header>
+<section>
+<h1 style="color:#659EC7;margin-left:auto;margin-right:auto">필수입력사항</h1>
 <form name="Registform" action=Regist_ok.jsp method=get onSubmit="return validateForm();">
-<table border=1>
+<table class="tab" border=1>
 	<tr><td class="front">아이디</td>
-    <td class="rear"><input type="text" class="textbox" name="usr" placeholder="5~8자리의 영문/숫자만 입력하세요."></td></tr>
+    <td class="rear"><input type="text" class="textbox" name="usr" id="usr" placeholder="5~8자리의 영문/숫자만 입력하세요.">
     <tr><td class="front">비밀번호</td>
     <td class="rear"><input type="text" class="textbox" name="pword" placeholder="password"></td></tr>
    	<tr><td class="front">비밀번호 확인</td>
@@ -132,6 +129,11 @@
    	<tr><td class="front">성별</td>
    	<td class="rear"><input type="radio" name="gender" value="male"/>남
    	<input type="radio" name="gender" value="female"/>여</td></tr>
+   	<tr><td class="front">부서</td>
+   	<td class="rear"><input type="radio" name="dept" id="dept" value="10">인사팀
+   	<input type="radio" name="dept" id="dept" value="20">전산팀
+   	<input type="radio" name="dept" id="dept" value="30">행정팀
+   	<input type="radio" name="dept" id="dept" value="40">금융팀</td></tr>
    	<tr><td class="front">생년월일</td>
    	<td class="rear"><select name="year">
    	<script>
@@ -186,10 +188,12 @@
    	지번 주소<br><input type="text" class="textbox" name="addr_lot"/><br>
    	도로명 주소<br><input type="text" class="textbox" name="addr_road"/><br>
    	나머지 주소<br><input type="text" class="textbox" name="addr_rest"/></td></tr>
+   	
 </table>
-    
-   	<input type="submit" value="가입하기!"/>
+    <input type="submit" style="width:150px;height:50px;margin-left:auto;margin-right:auto" value="가입하기!"/>
+   	
 </form>
-
+</section>
+</div>
 </body>
 </html>

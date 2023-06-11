@@ -1,15 +1,44 @@
 @charset "UTF-8";
 
+	/* 레이아웃의 큰 틀이 되는 body의 css */
 	body{
 		text-align : center;
+		width : 100%;
+		background-color : #E3E4FA;
 	}
 	
-	div{
-		margin:150px;
-		text-align : center;
-		width : 500px;
-		height: 300px;
+	/* 헤더, 네비게이션, 섹션의 공통적인 css */
+	header, section{
 		border : 1px solid #999;
+		margin-bottom : 20px;
+	}
+	
+	/* body위에 덮을 div의 css */
+	#wrapper{
+		width : 90%;
+		text-align : left;
+		min-height : 400px;
+		margin : 0 auto;
+		float: left;
+		padding : 5%;
+	}
+	
+	/* header의 css */
+	header{
+		font-family : 'Gugi', cursive;
+		width : 100%; 
+		background-color : #4E387E;
+		font-size : 50pt;
+		height : 100px;
+		padding-top : 10px;
+	}
+	
+	
+	/* 주 내용이 들어갈 section의 css */
+	section{
+		padding-top : 40px;
+		width : 100%;
+		float : left;
 	}
 	
 	.button{
@@ -21,4 +50,20 @@
 		width:200px;
 	}
 	
+	.front{
+		background-color : #B4CFEC;
+	}
+	
+	.rear{
+		background-color : #F0F8FF;
+	}
+	
+	.textbox{
+		width:200px;
+	}
+	
+	.tab{
+		margin-left : auto;
+		margin-right : auto;
+	}
 	

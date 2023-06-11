@@ -2,14 +2,13 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="./dbconn.jsp"%>
-<%@page import="java.time.LocalDateTime"%>
-<%@page import="java.time.format.DateTimeFormatter"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="./Newcss.css">
 </head>
 <body>
 
@@ -20,6 +19,7 @@
 	String usr_pwd = request.getParameter("pword");
 	String usrname = request.getParameter("usrname");
 	String gender = request.getParameter("gender");
+	int dept_no = Integer.parseInt(request.getParameter("dept"));
 	String year = request.getParameter("year");
 	String month = request.getParameter("month");
 	String day = request.getParameter("day");
@@ -42,7 +42,7 @@
 
 	out.println("<h1>회원가입 성공</h1>");
 	
-	String sql = "INSERT INTO usrregist VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,DEFAULT)";
+	String sql = "INSERT INTO usrregist VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,DEFAULT)";
 	PreparedStatement pstmt = null;
 	
 	/* 예외처리 하면 값이 잘 입력되는데 안하면 오류떠서 일단 예외처리 했습니다 */
@@ -53,21 +53,22 @@
 		pstmt.setString(2,usr_pwd);
 		pstmt.setString(3,usrname);
 		pstmt.setString(4,gender);
-		pstmt.setString(5,year);
-		pstmt.setString(6,month);
-		pstmt.setString(7,day);
-		pstmt.setString(8,kind);
-		pstmt.setString(9,tel);
-		pstmt.setString(10,sms_al);
-		pstmt.setString(11,email);
-		pstmt.setString(12,email_al);
-		pstmt.setString(13,addr_post);
-		pstmt.setString(14,addr_lot);
-		pstmt.setString(15,addr_road);
-		pstmt.setString(16,addr_rest);
+		pstmt.setInt(5,dept_no);
+		pstmt.setString(6,year);
+		pstmt.setString(7,month);
+		pstmt.setString(8,day);
+		pstmt.setString(9,kind);
+		pstmt.setString(10,tel);
+		pstmt.setString(11,sms_al);
+		pstmt.setString(12,email);
+		pstmt.setString(13,email_al);
+		pstmt.setString(14,addr_post);
+		pstmt.setString(15,addr_lot);
+		pstmt.setString(16,addr_road);
+		pstmt.setString(17,addr_rest);
 		
-		int rows=pstmt.executeUpdate();
-		out.println(rows+"명의 회원가입 완료");
+		pstmt.executeUpdate();
+		out.println(usrname+"의 회원가입 완료");
 		
 	}catch (SQLException e) {
 		e.printStackTrace();
@@ -82,17 +83,22 @@
 	} 
 	%>
 <br>
-ID:&nbsp;&nbsp;<%=usr_id %><br>
-PASSWORD:&nbsp;&nbsp;<%=usr_pwd %><br>
-BIRTH:&nbsp;&nbsp;<%=year%>년 <%=month %>월 <%=day %>일<br> 
-GENDER:&nbsp;&nbsp;<%=gender %><br>
-PHONE NUMBER:&nbsp;&nbsp;<%=tel %><br>
-SMS:&nbsp;&nbsp;<%=sms_al %><br>
-EMAIL:&nbsp;&nbsp;<%=email %><br>
-EMAIL_ADD:&nbsp;&nbsp;<%=email_al %><br>
-POST NUMBER:&nbsp;&nbsp;<%=addr_post %><br>
-LOT NUMBER ADDRESS:&nbsp;&nbsp;<%=addr_lot %><br>
-ROAD ADDRESS:&nbsp;&nbsp;<%=addr_road %><br>
-DETAIL ADDRESS:&nbsp;&nbsp;<%=addr_rest %><br>
+<table class="tab" border=1>
+<tr><th>ID</th><td><%=usr_id %></td></tr>
+<tr><th>PASSWORD</th><td><%=usr_pwd %></td></tr>
+<tr><th>BIRTH</th><td><%=year%>년 <%=month %>월 <%=day %>일</td></tr>
+<tr><th>GENDER</th><td><%=gender %></td></tr>
+<tr><th>DEPT</th><td><%=dept_no %></td></tr>
+<tr><th>PHONE NUMBER</th><td><%=tel %></td></tr>
+<tr><th>SMS</th><td><%=sms_al %></td></tr>
+<tr><th>EMAIL</th><td><%=email %></td></tr>
+<tr><th>EMAIL_ADD</th><td><%=email_al %></td></tr>
+<tr><th>POST NUMBER</th><td><%=addr_post %></td></tr>
+<tr><th>LOT NUMBER ADDRESS</th><td><%=addr_lot %></td></tr>
+<tr><th>ROAD ADDRESS</th><td><%=addr_road %></td></tr>
+<tr><th>DETAIL ADDRESS</th><td><%=addr_rest %></td></tr>
+</table>
+
+<button onclick="location.replace('Main.jsp');">확인</button>
 </body>
 </html>

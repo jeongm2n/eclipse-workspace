@@ -19,8 +19,24 @@
 	if(rs.next()){ //해당 id가 있다면 update 
 		String column = request.getParameter("update");
 		String content = request.getParameter("content");
+		String sql2="";
 		
-		String sql2 = "UPDATE usrregist SET "+column+"='"+content+"' WHERE member_id='"+update_id+"'";
+		if(column.equals("dept_name")){
+			int dept = 0;
+			
+			String sql3 = "SELECT dept_no FROM dept WHERE dept_name='"+content+"'";
+			PreparedStatement pstmt3 = conn.prepareStatement(sql3);
+			ResultSet rs2 = pstmt3.executeQuery();
+			
+			if(rs2.next()){
+				dept = rs2.getInt("dept_no");
+			}
+			sql2 = "UPDATE usrregist SET dept_no="+dept+" WHERE member_id='"+update_id+"'";
+		}
+		else{
+			sql2 = "UPDATE usrregist SET "+column+"='"+content+"' WHERE member_id='"+update_id+"'";
+		}
+		
 		PreparedStatement pstmt2 = conn.prepareStatement(sql2);
 		pstmt2.executeUpdate();
 		

@@ -160,7 +160,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="/Users/jeongmin/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ROOT" path="" reloadable="false"/><Context docBase="/Users/jeongmin/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/web01" path="/web01" reloadable="true" source="org.eclipse.jst.jee.server:web01"/><Context docBase="/Users/jeongmin/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/date0530" path="/date0530" reloadable="true" source="org.eclipse.jst.jee.server:date0530"/><Context docBase="/Users/jeongmin/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Board" path="/Board" reloadable="true" source="org.eclipse.jst.jee.server:Board"/><Context docBase="/Users/jeongmin/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/pro05" path="/pro05" reloadable="true" source="org.eclipse.jst.jee.server:pro05"/></Host>
+      <Context docBase="/Users/jeongmin/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ROOT" path="" reloadable="false"/></Host>
     </Engine>
   </Service>
 </Server>

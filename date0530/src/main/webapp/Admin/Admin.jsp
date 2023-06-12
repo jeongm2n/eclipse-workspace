@@ -45,6 +45,15 @@
 		else{ return true;}
 	}
 	
+	function validatedelete(){
+		if(confirm("삭제하시겠습니까?")){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 </script>
 </head>
 <body>
@@ -61,7 +70,7 @@
 		<tr><th>번호</th><th>부서명</th></tr>
 		<%while(rs2.next()){%>
 		<tr><td><%=rs2.getInt("dept_no") %></td><td><%=rs2.getString("dept_name") %></td>
-		<td><a href="Dept_delete.jsp?dept_no=<%=rs2.getInt("dept_no") %>">삭제</a></td></tr>
+		<td><a href="Dept_delete.jsp?dept_no=<%=rs2.getInt("dept_no") %>" onclick="return validatedelete()">삭제</a></td></tr>
 		<%}
 	%>
 	<tr><td><input style="width:50px" type="text" name="insert_no" placeholder="번호"/></td>

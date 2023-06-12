@@ -1,28 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@page session="true"%>
-<%@ include file="./dbconn.jsp"%>
+<%@ include file="../dbconn.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>정보 수정 성공</title>
-<link rel="stylesheet" href="./Newcss.css">
+<link rel="stylesheet" href="../Newcss.css">
 <script>
-function btnclick(){
-	session.removeAttribute("ID");
-	window.location.replace("Main.jsp");
-}
+
 </script>
 </head>
 <body>
 <%
-	String usr_id = (String)session.getAttribute("ID");
-
+	String usr_id = request.getParameter("id");
 	String member_pwd = request.getParameter("pwd");
 	String member_name = request.getParameter("usrname");
 	String member_gender = request.getParameter("gender");
+	int dept_no = Integer.parseInt(request.getParameter("dept"));
 	String birth_y = request.getParameter("year");
 	String birth_m = request.getParameter("month");
 	String birth_d = request.getParameter("day");
@@ -41,7 +37,7 @@ function btnclick(){
 	
 	/* 변경 사항이 없는 항목은 원래 저장되어 있던 디폴트 값으로 변경되고(원래 있던 값으로 update하는 것이니 정보 변동 없음) 
 	변경 사항이 있는 항목은 변경한 값으로 update되게 모든 항목을 update sql문에 삽입 */
-	String sql = "UPDATE usrregist SET member_pwd='"+member_pwd+"',member_name='"+member_name+"',member_gender='"+member_gender+"',birth_y='"+birth_y+
+	String sql = "UPDATE usrregist SET member_id='"+usr_id+"',member_pwd='"+member_pwd+"',member_name='"+member_name+"',member_gender='"+member_gender+"',dept_no="+dept_no+",birth_y='"+birth_y+
 			"',birth_m='"+birth_m+"',birth_d='"+birth_d+"',birth_kind='"+birth_kind+"',tel='"+tel+"',sms_al='"+sms_al+"',email_al='"+email_al+
 			"',addr_post='"+addr_post+"',addr_lot='"+addr_lot+"',addr_road='"+addr_road+"',addr_rest='"+addr_rest+"' WHERE member_id='"+usr_id+"'";
 	
@@ -63,7 +59,7 @@ function btnclick(){
 <div>
 <table style="text-align:center;margin:100px">
 <tr><td><%=usr_id %>의 정보 수정 완료!</td></tr>
-<tr><td><button type="button" onclick=btnclick()>돌아가기</button></td></tr>
+<tr><td><button type="button" onclick="location.replace('Admin.jsp')">돌아가기</button></td></tr>
 </table>
 </div>
 </body>

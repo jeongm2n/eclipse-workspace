@@ -9,10 +9,15 @@
 <meta charset="UTF-8">
 <title>정보 수정 성공</title>
 <link rel="stylesheet" href="./Newcss.css">
+<script>
+function btnclick(){
+	session.removeAttribute("ID");
+	window.location.replace("Main.jsp");
+}
+</script>
 </head>
 <body>
 <%
- 	
 	String usr_id = (String)session.getAttribute("ID");
 
 	String member_pwd = request.getParameter("pwd");
@@ -58,7 +63,7 @@
 <div>
 <table style="text-align:center;margin:100px">
 <tr><td><%=usr_id %>의 정보 수정 완료!</td></tr>
-<tr><td><a href="Login_ok.jsp"><b>돌아가기</b></a></td></tr>
+<tr><td><button type="button" onclick=btnclick()>돌아가기</button></td></tr>
 </table>
 </div>
 </body>

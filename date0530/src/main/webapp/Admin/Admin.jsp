@@ -45,6 +45,7 @@
 		else{ return true;}
 	}
 	
+	/* 삭제할건지 한 번더 물어봄 */
 	function validatedelete(){
 		if(confirm("삭제하시겠습니까?")){
 			return true;
@@ -54,6 +55,30 @@
 		}
 	}
 	
+	/* 부서 추가하기 전에 빈칸이 있는지 확인 */
+	function validateInsert(){
+		var num = document.getElementById('insert_no').value;
+		var nam = document.getElementById('insert_name').value;
+		
+		if(!num || !nam){
+			alert("빈칸이 있습니다.");
+			return false;
+		}
+		else{ return true;}
+	}
+	
+	/* 부서 정보 변경하기 전에 빈칸이 있는지 확인 */
+	function validateUpdate(){
+		var num = document.getElementById('update_no').value;
+		var column = document.getElementById('column').value;
+		var content = document.getElementById('content').value;
+		
+		if(!num || !column || !content){
+			alert("빈칸이 있습니다.")
+			return false;
+		}
+		else{return true;}
+	}
 </script>
 </head>
 <body>
@@ -73,19 +98,19 @@
 		<td><a href="Dept_delete.jsp?dept_no=<%=rs2.getInt("dept_no") %>" onclick="return validatedelete()">삭제</a></td></tr>
 		<%}
 	%>
-	<tr><td><input style="width:50px" type="text" name="insert_no" placeholder="번호"/></td>
-	<td><input style="width:50px" type="text" name="insert_name" placeholder="부서명"/></td>
-	<td><input style="float:right;width:30px;height:15px;font-size:5pt" type="submit" value="추가"/></td></tr>
+	<tr><td><input style="width:50px" type="text" name="insert_no" id="insert_no" placeholder="번호"/></td>
+	<td><input style="width:50px" type="text" name="insert_name" id="insert_no" placeholder="부서명"/></td>
+	<td><input style="float:right;width:30px;height:15px;font-size:5pt" type="submit" value="추가" onclick="return validateInsert()"/></td></tr>
 	</table></form><br>
 	<form action=Dept_update.jsp>
 	<table>
 		<tr><th>변경</th></tr>
-		<tr><td><input type="text" style="width:50px" name="update_no" placeholder="번호"/></td></tr>
+		<tr><td><input type="text" style="width:50px" name="update_no" id="update_no" placeholder="번호"/></td></tr>
 		<tr><td><select name="column" id="column">
 		<option value="dept_no">번호</option><option value="dept_name">부서명</option></select>
-		<input style="width:50px" type="text" name="content" placeholder="변경사항"/></td>
+		<input style="width:50px" type="text" name="content" id="content" placeholder="변경사항"/></td>
 	</table>
-	<input style="float:right;width:30px;height:15px;font-size:5pt" type="submit" value="변경"/><br>
+	<input style="float:right;width:30px;height:15px;font-size:5pt" type="submit" value="변경" onclick="return validateUpdate()"/><br>
 	</form>
 	
 </aside>
@@ -141,7 +166,7 @@
 	<tr style="background-color:#F0F8FF"><td><%=member_id %></td><td><%=member_pwd %></td><td><%=member_name %></td><td><%=member_gender %></td><td><%=dept_name %></td>
 	<td><%=birth_y %>년</td><td><%=birth_m %>월</td><td><%=birth_d %>일</td><td><%=birth_kind %></td><td><%=tel %></td><td><%=email %></td><td><%=sms_al %>,<%=email_al %></td>
 	<td><%=addr_post %></td><td><%=addr_lot %></td><td><%=addr_road %></td><td><%=addr_rest %></td><td><%=reg_date %></td>
-	<td><a href="./Admin_update.jsp?usr_id=<%=member_id%>">변경</a>/<a href="./Admin_delete.jsp?delete_id=<%=member_id%>">삭제</a></tr>
+	<td><a href="./Admin_update.jsp?usr_id=<%=member_id%>">변경</a>/<a href="./Admin_delete.jsp?delete_id=<%=member_id%>" onclick="return validatedelete()">삭제</a></tr>
 	<%} %>
 	</table> 
 	

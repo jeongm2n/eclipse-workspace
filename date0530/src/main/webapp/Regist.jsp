@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ include file="../dbconn.jsp"%>
+<%@ include file="./dbconn.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,7 +116,7 @@
 <header>회원&nbsp;가입&nbsp;페이지</header>
 <section>
 <h1 style="color:#659EC7;margin-left:auto;margin-right:auto">필수입력사항</h1>
-<form name="Registform" action=Regist_ok.jsp method=get onSubmit="return validateForm();">
+<form name="Registform" action=regist method=get onSubmit="return validateForm();">
 <table class="tab" border=1>
 	<tr><td class="front">아이디</td>
     <td class="rear"><input type="text" class="textbox" name="usr" id="usr" placeholder="5~8자리의 영문/숫자만 입력하세요.">
@@ -130,10 +130,17 @@
    	<td class="rear"><input type="radio" name="gender" value="male"/>남
    	<input type="radio" name="gender" value="female"/>여</td></tr>
    	<tr><td class="front">부서</td>
-   	<td class="rear"><input type="radio" name="dept" id="dept" value="10">인사팀
-   	<input type="radio" name="dept" id="dept" value="20">전산팀
-   	<input type="radio" name="dept" id="dept" value="30">행정팀
-   	<input type="radio" name="dept" id="dept" value="40">금융팀</td></tr>
+   	<td class="rear">
+   	<%
+   		String sql = "SELECT * FROM dept";
+	   	PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()){%>
+			<input type="radio" name="dept" value="<%=rs.getInt("dept_no") %>"/><%=rs.getString("dept_name") %>
+		<%}
+   	%>
+   	</td></tr>
    	<tr><td class="front">생년월일</td>
    	<td class="rear"><select name="year">
    	<script>
@@ -191,8 +198,8 @@
    	
 </table>
     <input type="submit" style="width:150px;height:50px;margin-left:auto;margin-right:auto" value="가입하기!"/>
-   	
 </form>
+<button onclick='listshow'>목록보기</button>
 </section>
 </div>
 </body>
